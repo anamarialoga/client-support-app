@@ -1,6 +1,7 @@
-# CLIENT SUPPORT APP 
-* FrontEnd: ReactJs
-* BackEnd: Express
-* Database: MangoDb
+# CLIENT SUPPORT APP
 
-* dependencies: express-async-handler, mongoose, dotenv, colors, bcryptjs
+- FrontEnd: ReactJs
+- BackEnd: Express
+- Database: MongoDb
+
+- dependencies: express-async-handler, mongoose, dotenv, colors, bcryptjs
