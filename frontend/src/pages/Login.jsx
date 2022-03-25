@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {FaSignInAlt} from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import axios from 'axios';
+
 toast.configure();
 
 export const Login = () => {
+
+    const navigate= useNavigate();
+
+    //Once the user is logged in, he cannot access this page again
+    useEffect(()=>{
+        if(localStorage.getItem('token') ){
+            //directly redirect to Home
+            navigate("/me");
+        }
+    }, [navigate])
+
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     })
+
+    const { email, password} = formData;
 
     const onChange=(e)=>{
        setFormData((prevState)=> ({
@@ -16,13 +33,34 @@ export const Login = () => {
        })) 
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        console.log('log in');
+
+        const config = {
+            header: {
+              "Content-Type": "application/json",
+            },
+        };
+
+        try {
+                const { data } = await axios.post(
+                "http://localhost:5000/api/users/login",
+                {
+                    email,
+                    password,
+                },
+                config
+                );
+                localStorage.setItem('token', data.token);
+                console.log(data);
+                toast.success("Login with success");
+                navigate("/me");
+          } 
+          catch (error) {
+                toast.error('Could not log in user');
+          }
+
     }
-
-    const { email, password} = formData;
-
     return (
     <>
         <section className="heading">

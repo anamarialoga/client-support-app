@@ -24,11 +24,10 @@
   - hashing & checking passwords
 - jsonwebtoken
   - generate tokens
+- nodemon
 
 * FRONTEND
 
-- Redux
-  - js library for managing app state
 - react-router-dom
 - toastify
 - axios

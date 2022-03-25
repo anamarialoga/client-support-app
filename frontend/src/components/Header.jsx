@@ -1,14 +1,37 @@
 import React from 'react';
-import {FaSignInAlt, FaUser} from 'react-icons/fa'
-import { Link } from 'react-router-dom';
+import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
+import { Link,  useNavigate } from 'react-router-dom';
 
 export const Header = () => {
-    return (
+
+    const navigate = useNavigate();
+
+    const onLogOut=()=>{
+        localStorage.removeItem("token");
+        window.location.reload();
+        navigate('/login');
+      }
+
+    return localStorage.getItem('token') ? (
         <header className='header'>
             <div className="logo">
-                <Link to="/">
+                    <Link to='/me'>
+                        Support Desk
+                    </Link>
+            </div>
+            <ul>
+                <li>
+                    <button className='btn' onClick={onLogOut}>
+                        <FaSignOutAlt/>
+                        Log Out
+                    </button>
+                </li>
+            </ul>
+        </header>
+    ) : (
+        <header className='header'>
+            <div className="logo">
                     Support Desk
-                </Link>
             </div>
             <ul>
                 <li>
@@ -18,12 +41,12 @@ export const Header = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link to='/register'>
+                    <Link to='/'>
                         <FaUser/>
                         Sign Up
                     </Link>
                 </li>
             </ul>
         </header>
-    );
+    )
 };

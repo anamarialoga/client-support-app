@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {FaUser} from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import axios from 'axios'
 toast.configure();
 
 export const Register = () => {
+
+    const navigate=useNavigate();
+
+    //Once the user is logged in, he cannot access this page again
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            //directly redirect to Home
+            navigate("/me");
+        }
+    }, [navigate])
+
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
         password2: ""
     })
+
+    const {name, email, password, password2} = formData;
 
     const onChange=(e)=>{
        setFormData((prevState)=> ({
@@ -18,15 +34,40 @@ export const Register = () => {
        })) 
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         if(password2 !== password){
             toast.error('Passwords do not match!')
         }
-    }
 
-    const {name, email, password, password2} = formData;
+        const config = {
+            header: {
+              "Content-Type": "application/json",
+            },
+        };
+
+        try {
+                const { data } = await axios.post(
+                "http://localhost:5000/api/users",
+                {
+                    name,
+                    email,
+                    password,
+                },
+                config
+                );
+                
+                console.log(data);
+                toast.success("Registrated with success");
+        
+                navigate("/login");
+          } 
+          catch (error) {
+                toast.error('Could not registrate user');
+          }
+
+    }
 
     return (
     <>

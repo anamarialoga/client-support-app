@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const dotenv= require('dotenv');
+
 dotenv.config();
 
 // @desc Register new user
@@ -59,25 +60,36 @@ const registerUser = asyncHandler(async (req, rsp)=>{
 // @route /api/users/login
 // @access Public
 // POST
-const loginUser = asyncHandler(async (req, rsp)=>{
+const loginUser = async (req, rsp)=>{
     const {email, password} = req.body;
-    const user = await User.findOne({email});
 
-    //compare the hashed pass with the input pass, using bcrypt
-    if(user && (await bcrypt.compare(password, user.password))){
-        rsp.status(200).json({ // STATUS 200 - success
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id)
-        })
-    }else{
-        rsp.status(400);
-        throw new Error(`Invalid login credentials`);
+    try{
+        const user = await User.findOne({email});
+        if(!user){
+            rsp.status(404);
+            throw new Error('User not found!');
+        }
+        
+        if(user && (await bcrypt.compare(password, user.password))){
+            rsp.status(200).json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                token: generateToken(user._id)
+            })
+        }
+        else{
+            rsp.status(404);
+            throw new Error('Invalid credentials!');
+        }
+
+    }catch(error){
+        rsp.status(500);
+        throw new Error('Something went wrong');
     }
 
     rsp.send('Login Route');
-})
+}
 
 // @desc Retrieve data about the current connected user
 // @route /api/users/me
