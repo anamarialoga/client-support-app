@@ -42,8 +42,8 @@ export const AppProvider = ({children})=>{
             },
         };
         
-        try{
-                const { data } = await axios.post(
+         try{
+                const  {data}  = await axios.post(
                 "http://localhost:5000/api/users/login",
                 {
                     email,
@@ -52,10 +52,10 @@ export const AppProvider = ({children})=>{
                 config
                 );
                     localStorage.setItem('token', data.token);
-                    console.log(data);
-                    window.location.href = '/me';
+                    console.log('data', data);
+                    //window.location.href = '/me';
                     toast.success("Login with success");
-          } 
+         } 
           catch (error) {
                 toast.error('Invalid email or password');
           }
