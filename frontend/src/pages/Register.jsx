@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {FaUser} from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import axios from 'axios'
+import { AppContext } from '../context/appContext';
 toast.configure();
 
 export const Register = () => {
+
+    const {isLogged} = useContext(AppContext);
+    console.log('Register: Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
 
     const navigate=useNavigate();
 
     //Once the user is logged in, he cannot access this page again
     useEffect(()=>{
-        if(localStorage.getItem('token')){
+        if(isLogged){
             //directly redirect to Home
             navigate("/me");
         }
-    }, [navigate])
-
+    }, [isLogged, navigate])
 
     const [formData, setFormData] = useState({
         name: "",
@@ -39,7 +42,7 @@ export const Register = () => {
 
         if(password2 !== password){
             toast.error('Passwords do not match!')
-        }
+        }else{
 
         const config = {
             header: {
@@ -66,7 +69,7 @@ export const Register = () => {
           catch (error) {
                 toast.error('Could not registrate user');
           }
-
+        }
     }
 
     return (

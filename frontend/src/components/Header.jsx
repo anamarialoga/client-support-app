@@ -1,17 +1,9 @@
 import React from 'react';
-import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
-import { Link,  useNavigate } from 'react-router-dom';
+import {FaSignInAlt, FaUser} from 'react-icons/fa'
+import { Link } from 'react-router-dom';
+import { ButtonLogout } from './ButtonLogout';
 
 export const Header = () => {
-
-    const navigate = useNavigate();
-
-    const onLogOut=()=>{
-        localStorage.removeItem("token");
-        window.location.reload();
-        navigate('/login');
-      }
-
     return localStorage.getItem('token') ? (
         <header className='header'>
             <div className="logo">
@@ -19,14 +11,11 @@ export const Header = () => {
                         Support Desk
                     </Link>
             </div>
-            <ul>
+             <ul>
                 <li>
-                    <button className='btn' onClick={onLogOut}>
-                        <FaSignOutAlt/>
-                        Log Out
-                    </button>
+                    <ButtonLogout/>
                 </li>
-            </ul>
+            </ul> 
         </header>
     ) : (
         <header className='header'>

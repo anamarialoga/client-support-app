@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom'
 import { FaQuestionCircle, FaTicketAlt } from 'react-icons/fa'
+import { useContext } from 'react';
+import { AppContext } from '../context/appContext';
 
 export const Home = () => {
+  
+  const {isLogged} = useContext(AppContext);
+  console.log('Home: Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
+  
   return (
     <>
       <section className='heading'>
