@@ -31,17 +31,18 @@ export const AppProvider = ({children})=>{
        })) 
     }
 
+    const { email, password} = formData;
+
     const onLogin = async (e) => {
-        const { email, password} = formData;
         e.preventDefault();
 
         const config = {
             header: {
-              "Content-Type": "application/json",
+            "Content-Type": "application/json",
             },
         };
-
-        try {
+        
+        try{
                 const { data } = await axios.post(
                 "http://localhost:5000/api/users/login",
                 {
@@ -50,13 +51,13 @@ export const AppProvider = ({children})=>{
                 },
                 config
                 );
-                localStorage.setItem('token', data.token);
-                console.log(data);
-                window.location.href = '/me';
-                toast.success("Login with success");
+                    localStorage.setItem('token', data.token);
+                    console.log(data);
+                    window.location.href = '/me';
+                    toast.success("Login with success");
           } 
           catch (error) {
-                toast.error('Invalid Credentials');
+                toast.error('Invalid email or password');
           }
 
     }

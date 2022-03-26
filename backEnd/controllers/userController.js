@@ -17,17 +17,17 @@ const registerUser = asyncHandler(async (req, rsp)=>{
     const {name, email, password} = req.body;
     console.log(name, email, password); 
 
-    //if credentials are not correct
+    //if credentials are not correct (are not found in db)
     if(!name || !email || !password){
-        rsp.status(400)
-        throw new Error('Please complete all input fields!')
+        console.log('Invalid Credentials')
+        return rsp.status(400)
     }
 
     //if user already exists
     const userExists = await User.findOne({email});//search by email if exists
     if(userExists){
-        rsp.status(400);
-        throw new Error('User already exists');
+        console.log('User already exists')
+        return rsp.status(400);
     }
 
     //hash password
@@ -42,18 +42,16 @@ const registerUser = asyncHandler(async (req, rsp)=>{
     })
 
     if(user){ //success
-        rsp.status(201).json({ // STATUS 201 - created
+       return rsp.status(201).json({ // STATUS 201 - created
             _id: user._id,
             name: user.name,
             email: user.email,
             token: generateToken(user._id)
         })
     }else{ //failure
-        rsp.status(400);
-        throw new Error(`Could not registrate user`);
+        console.log('Something went wrong');
+        return rsp.status(400);
     }
-
-    rsp.send('Register Route');
 })
 
 // @desc Login user
@@ -66,12 +64,12 @@ const loginUser = async (req, rsp)=>{
     try{
         const user = await User.findOne({email});
         if(!user){
-            rsp.status(404);
-            throw new Error('User not found!');
+            console.log('User not found');
+            return rsp.status(404);
         }
         
         if(user && (await bcrypt.compare(password, user.password))){
-            rsp.status(200).json({
+           return rsp.status(200).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -79,16 +77,14 @@ const loginUser = async (req, rsp)=>{
             })
         }
         else{
-            rsp.status(404);
-            throw new Error('Invalid credentials!');
+            console.log('Invalid password');
+            return rsp.status(404);
         }
 
     }catch(error){
-        rsp.status(500);
-        throw new Error('Something went wrong');
+       console.log('Something went wrong');
+       return rsp.status(500);
     }
-
-    rsp.send('Login Route');
 }
 
 // @desc Retrieve data about the current connected user
