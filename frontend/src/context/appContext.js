@@ -53,11 +53,11 @@ export const AppProvider = ({children})=>{
                 );
                     localStorage.setItem('token', data.token);
                     console.log('data', data);
-                    //window.location.href = '/me';
+                    window.location.href = '/me';
                     toast.success("Login with success");
          } 
           catch (error) {
-                toast.error('Invalid email or password');
+                toast.error(error.response.data.message);
           }
 
     }

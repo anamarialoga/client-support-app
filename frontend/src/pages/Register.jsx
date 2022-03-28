@@ -67,7 +67,7 @@ export const Register = () => {
                 navigate("/login");
           } 
           catch (error) {
-                toast.error('Could not registrate user');
+                toast.error(error.response.data.message);
           }
         }
     }

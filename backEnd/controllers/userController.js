@@ -1,5 +1,4 @@
 //Contains the functionality 
-
 const asyncHandler=require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
@@ -17,17 +16,17 @@ const registerUser = asyncHandler(async (req, rsp)=>{
     const {name, email, password} = req.body;
     console.log(name, email, password); 
 
-    //if credentials are not correct (are not found in db)
+    //if credentials are not written correctly
     if(!name || !email || !password){
         console.log('Invalid Credentials')
-        return rsp.status(400)
+        return rsp.status(400).send({message: 'Invalid Credentials'});
     }
 
     //if user already exists
     const userExists = await User.findOne({email});//search by email if exists
     if(userExists){
-        console.log('User already exists')
-        return rsp.status(400);
+        console.log('User already exists');  
+        return rsp.status(400).send({message: 'User already exists'});
     }
 
     //hash password
@@ -50,7 +49,7 @@ const registerUser = asyncHandler(async (req, rsp)=>{
         })
     }else{ //failure
         console.log('Something went wrong');
-        return rsp.status(400);
+        return rsp.status(400).send({message: 'Something went wrong'});
     }
 })
 
@@ -65,7 +64,7 @@ const loginUser = async (req, rsp)=>{
         const user = await User.findOne({email});
         if(!user){
             console.log('User not found');
-            return rsp.status(404);
+            return rsp.status(404).send({message: 'User not found'});
         }
         
         if(user && (await bcrypt.compare(password, user.password))){
@@ -78,12 +77,12 @@ const loginUser = async (req, rsp)=>{
         }
         else{
             console.log('Invalid password');
-            return rsp.status(404);
+            return rsp.status(404).send({message: 'Invalid Password'});
         }
 
     }catch(error){
        console.log('Something went wrong');
-       return rsp.status(500);
+       return rsp.status(500).send({message: 'Something went wrong'});
     }
 }
 
