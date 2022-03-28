@@ -21,6 +21,6 @@ app.get('/', (req, rsp)=>{
 })
 
 //connect with the route file, which contains the strings to be added to the route;
-app.use('/api/users', require('./routes/userRoutes') )
-
+app.use('/api/users', require('./routes/userRoutes') );
+app.use('/api/tickets', require('./routes/ticketRoutes'));
 app.listen(PORT, ()=>console.log('SERVER STARTED ON PORT ', PORT));

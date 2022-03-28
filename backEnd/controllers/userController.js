@@ -5,6 +5,8 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const dotenv= require('dotenv');
 
+//asyncHandler - to avoid try catch
+
 dotenv.config();
 
 // @desc Register new user
@@ -18,8 +20,8 @@ const registerUser = asyncHandler(async (req, rsp)=>{
 
     //if credentials are not written correctly
     if(!name || !email || !password){
-        console.log('Invalid Credentials')
-        return rsp.status(400).send({message: 'Invalid Credentials'});
+        console.log('Invalid Input')
+        return rsp.status(400).send({message: 'Invalid Input'});
     }
 
     //if user already exists
