@@ -1,5 +1,5 @@
-React Front To Back 2022 - Udemy Course idea (components, pages, styles, usage)
-Functionality implementation by me
+React Front To Back 2022 - Udemy Course Idea (components, pages, styles, usage)
+Authentication & registration made by myself (not using redux)
 
 'npm run dev' for starting both frontend and backend;
 
