@@ -32,7 +32,12 @@ Authentication & registration made by myself (not using redux)
 * FRONTEND
 
 - react-router-dom
+  - use Router, Routes, Route, useNavigate(), etc.
 - toastify
+  - error handling in frontend
 - axios
+  - http requests , to avoid fetch()
 - react-icons
 - react-modal
+- react-jwt
+  - use decodeToken()

@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import {decodeToken} from 'react-jwt';
 import axios from 'axios';
+
 
 toast.configure();
 
@@ -9,13 +11,21 @@ export const AppContext = createContext();
 
 export const AppProvider = ({children})=>{
 
+    const [user, setUser] = useState({});
     const [isLogged, setIsLogged] = useState(false);
+
 
     useEffect(()=>{
         if(localStorage.getItem('token'))
-            {setIsLogged(true);}
+            {
+                setIsLogged(true);
+                setUser(decodeToken(localStorage.getItem('token')));
+            }
         else
-            {setIsLogged(false);}
+            {
+                setIsLogged(false);
+                setUser({});
+            }
     },[isLogged]);
 
 
@@ -37,7 +47,7 @@ export const AppProvider = ({children})=>{
         e.preventDefault();
 
         const config = {
-            header: {
+            headers: {
             "Content-Type": "application/json",
             },
         };
@@ -76,6 +86,7 @@ return (
     formData,
     onLogOut,
     isLogged,
+    user,
     }}>
         {children}
     </AppContext.Provider>

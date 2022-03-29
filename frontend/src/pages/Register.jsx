@@ -7,12 +7,12 @@ import { AppContext } from '../context/appContext';
 toast.configure();
 
 export const Register = () => {
+    console.log('Register Page');
 
     const {isLogged} = useContext(AppContext);
-    console.log('Register: Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
+    console.log('Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
 
     const navigate=useNavigate();
-
     //Once the user is logged in, he cannot access this page again
     useEffect(()=>{
         if(isLogged){
@@ -45,7 +45,7 @@ export const Register = () => {
         }else{
 
         const config = {
-            header: {
+            headers: {
               "Content-Type": "application/json",
             },
         };

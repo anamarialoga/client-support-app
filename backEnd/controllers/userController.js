@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req, rsp)=>{
             _id: user._id,
             name: user.name,
             email: user.email,
-            token: generateToken(user._id)
+            token: generateToken(user._id, user.name, user.email)
         })
     }else{ //failure
         console.log('Something went wrong');
@@ -74,7 +74,7 @@ const loginUser = async (req, rsp)=>{
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                token: generateToken(user._id)
+                token: generateToken(user._id, user.name, user.email)
             })
         }
         else{
@@ -103,8 +103,8 @@ const getMe = asyncHandler(async (req, rsp) => {
 })
 
 //Tokens are needed for routes with @access Protected
-const generateToken = (id) =>{
-    return jwt.sign({id}, process.env.JWT_SECRET, {
+const generateToken = (id, name, email) =>{
+    return jwt.sign({id, name, email}, process.env.JWT_SECRET, {
         expiresIn: '30d'
     })
 }

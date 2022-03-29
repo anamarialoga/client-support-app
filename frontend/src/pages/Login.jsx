@@ -6,8 +6,10 @@ import { AppContext } from '../context/appContext';
 toast.configure();
 
 export const Login = () => {
+    console.log('Login Page');
+    
     const {onChange, onLogin, formData, isLogged} = useContext(AppContext);
-    console.log("Login: Is the user logged?", isLogged, 'token: ', localStorage.getItem('token'));
+    console.log("Is the user logged?", isLogged, 'token: ', localStorage.getItem('token'));
 
     return (
     <>

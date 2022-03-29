@@ -4,9 +4,11 @@ import { useContext } from 'react';
 import { AppContext } from '../context/appContext';
 
 export const Home = () => {
-  
-  const {isLogged} = useContext(AppContext);
-  console.log('Home: Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
+  console.log('Home Page');
+
+  const {isLogged, user} = useContext(AppContext);
+  console.log('Is the user logged?', isLogged);
+  console.log('Current user: ', user);
   
   return (
     <>
