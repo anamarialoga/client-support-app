@@ -14,13 +14,109 @@ const getTickets = asyncHandler(async (req, rsp) => {
         console.log('User not found');
         return rsp.status(404).send({message: 'User not found'});
     }
-    const tickets = await Ticket.find({user: req.user.id})
+    const tickets = await Ticket.find({userId: req.user.id})
     if(tickets.length>0) {
         rsp.status(200).json(tickets);
     }else{
         console.log('Currently there are no tickets')
         rsp.status(200).json({message: 'Currently there are no tickets'})
     }   
+})
+
+
+// @desc Get user ticket
+// @route /api/tickets/:ticketid
+// @access Protected
+// GET
+const getTicket = asyncHandler(async (req, rsp) => {
+
+    const user = await User.findById(req.user.id);
+
+    if(!user){
+        console.log('User not found');
+        return rsp.status(404).send({message: 'User not found'});
+    }
+
+    //acccess the id of the ticket from URL params;
+    const ticket = await Ticket.findById(req.params.ticketId);
+
+    if(!ticket) {
+        return rsp.status(404).json({message: 'Ticket not found'});
+    }
+
+    //if the userId from the ticket obj doesn't match the id of the user that made the request
+    if(ticket.userId.toString() !== req.user.id)
+    {
+        console.log('Not Authorized')
+        return rsp.status(401).json({message: 'Not Authorized'})
+    } 
+
+    return rsp.status(200).json(ticket);
+})
+
+
+// @desc Delete user ticket
+// @route /api/tickets/:ticketid
+// @access Protected
+// DELETE
+const delTicket = asyncHandler(async (req, rsp) => {
+
+    const user = await User.findById(req.user.id);
+
+    if(!user){
+        console.log('User not found');
+        return rsp.status(404).send({message: 'User not found'});
+    }
+
+    //acccess the id of the ticket from URL params;
+    const ticket = await Ticket.findById(req.params.ticketId);
+
+    if(!ticket) {
+        return rsp.status(404).json({message: 'Ticket not found'});
+    }
+
+    //if the userId from the ticket obj doesn't match the id of the user that made the request
+    if(ticket.userId.toString() !== req.user.id)
+    {
+        console.log('Not Authorized')
+        return rsp.status(401).json({message: 'Not Authorized'})
+    } 
+
+    await ticket.remove();
+
+    return rsp.status(200).json({message: 'The ticket has been deleted'});
+})
+
+// @desc Update user ticket
+// @route /api/tickets/:ticketid
+// @access Protected
+// PUT
+const updateTicket = asyncHandler(async (req, rsp) => {
+
+    const user = await User.findById(req.user.id);
+
+    if(!user){
+        console.log('User not found');
+        return rsp.status(404).send({message: 'User not found'});
+    }
+
+    //acccess the id of the ticket from URL params;
+    const ticket = await Ticket.findById(req.params.ticketId);
+
+    if(!ticket) {
+        return rsp.status(404).json({message: 'Ticket not found'});
+    }
+
+    //if the userId from the ticket obj doesn't match the id of the user that made the request
+    if(ticket.userId.toString() !== req.user.id)
+    {
+        console.log('Not Authorized')
+        return rsp.status(401).json({message: 'Not Authorized'})
+    } 
+
+    const updatedTicket = await Ticket.findByIdAndUpdate(req.params.ticketId, req.body, {new: true});
+
+    return rsp.status(200).json(updatedTicket);
 })
 
 
@@ -48,7 +144,7 @@ const createTicket = asyncHandler(async (req, rsp) => {
     const ticket = await Ticket.create({
         product, 
         description, 
-        user: req.user.id, 
+        userId: req.user.id, 
         status: 'new'
     })
 
@@ -56,4 +152,4 @@ const createTicket = asyncHandler(async (req, rsp) => {
 })
 
 
-module.exports= {getTickets, createTicket};
+module.exports= {getTickets, createTicket, getTicket, delTicket, updateTicket};

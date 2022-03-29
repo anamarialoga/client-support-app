@@ -1,7 +1,7 @@
 const mongoose=require('mongoose'); 
 
 const ticketSchema = mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId, //Relationship between user and tickets
         required: true,
         ref: 'User' 
