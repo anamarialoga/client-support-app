@@ -30,7 +30,7 @@ export const NewTicket = () => {
         
          try{
                 const  {data}  = await axios.post(
-                "http://localhost:5000/api/tickets",
+                "http://localhost:1179/api/tickets",
                 {
                     product,
                     description,

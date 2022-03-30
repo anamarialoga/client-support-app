@@ -9,6 +9,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export const MyTickets= ()=> {
+    console.log(process.env.PORT);
     const navigate=useNavigate();
     const {isLogged, user} = useContext(AppContext);
     const [tickets, setTickets] = useState([]);
@@ -21,7 +22,7 @@ export const MyTickets= ()=> {
             },
         };
         try{
-            const response = await axios.get('http://localhost:5000/api/tickets', config)  ;
+            const response = await axios.get('http://localhost:1179/api/tickets', config)  ;
             if(response.data.length> 0)
             {
               setTickets(response.data);

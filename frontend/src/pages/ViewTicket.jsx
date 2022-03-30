@@ -29,7 +29,7 @@ export const ViewTicket = ()=> {
             },
         };
         try{
-            const {data} = await axios.get(`http://localhost:5000/api/tickets/${ticketId}`, config);
+            const {data} = await axios.get(`http://localhost:1179/api/tickets/${ticketId}`, config);
             setTicket(data);
             setIsLoading(false);
         }catch(error){
@@ -44,7 +44,7 @@ export const ViewTicket = ()=> {
             },
         };
         try{
-            const response = await axios.get(`http://localhost:5000/api/tickets/${ticketId}/notes`, config)  ;
+            const response = await axios.get(`http://localhost:1179/api/tickets/${ticketId}/notes`, config)  ;
             if(response.data.length> 0)
             {
               setNotes(response.data);
@@ -70,7 +70,7 @@ export const ViewTicket = ()=> {
             },
         };
         try{
-            const {data} = await axios.post(`http://localhost:5000/api/tickets/${ticketId}/notes`, 
+            const {data} = await axios.post(`http://localhost:1179/api/tickets/${ticketId}/notes`, 
             {
                 text: noteText,
             }, 
@@ -92,7 +92,7 @@ export const ViewTicket = ()=> {
             },
         };
         try{
-            const {data} = await axios.put(`http://localhost:5000/api/tickets/${ticketId}`,
+            const {data} = await axios.put(`http://localhost:1179/api/tickets/${ticketId}`,
             {
                 status: 'closed'
             }, 
