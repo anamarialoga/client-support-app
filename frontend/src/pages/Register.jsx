@@ -52,7 +52,7 @@ export const Register = () => {
         };
 
         try {
-                const response = await axios.post(
+                const {data} = await axios.post(
                 "http://localhost:5000/api/users",
                 {
                     name,
@@ -62,13 +62,13 @@ export const Register = () => {
                 config
                 );
                 
-                console.log(response.data);
+                console.log(data);
                 toast.success("Registrated with success");
         
                 navigate("/login");
           } 
           catch (error) {
-                toast.error(error.response.message);
+                toast.error(error.response.data.message);
           }
         }
     }
