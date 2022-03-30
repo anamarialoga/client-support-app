@@ -9,7 +9,6 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export const MyTickets= ()=> {
-    console.log(process.env.PORT);
     const navigate=useNavigate();
     const {isLogged, user} = useContext(AppContext);
     const [tickets, setTickets] = useState([]);
