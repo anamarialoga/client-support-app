@@ -3,6 +3,7 @@ import { AppContext } from '../context/appContext';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 toast.configure();
 
 export const NewTicket = () => {
@@ -48,6 +49,10 @@ export const NewTicket = () => {
     return (
       <>
         <section className='heading'>
+        <button className="btn btn-back btn-reverse" onClick={()=>navigate('/')}>
+          <FaArrowLeft/>
+          Back
+        </button>
         <h1>Create New Ticket</h1>
         <p>Please fill out the form below</p>
       </section>

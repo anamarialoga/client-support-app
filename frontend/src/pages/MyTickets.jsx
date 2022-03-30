@@ -5,8 +5,11 @@ import { Spinner } from '../components/Spinner';
 import TicketItem from '../components/TicketItem';
 import { AppContext } from '../context/appContext';
 import ReactPaginate from 'react-paginate';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export const MyTickets= ()=> {
+    const navigate=useNavigate();
     const {isLogged, user} = useContext(AppContext);
     const [tickets, setTickets] = useState([]);
     const [isLoading, setIsLoading ] = useState(false);
@@ -51,6 +54,10 @@ export const MyTickets= ()=> {
 
   return isLoading === false ?(
     <>
+    <button className="btn btn-back btn-reverse" onClick={()=>navigate('/')}>
+        <FaArrowLeft/>
+        Back
+    </button>
     <h2>My Tickets</h2>
     <br/>
       <div className='tickets'>
