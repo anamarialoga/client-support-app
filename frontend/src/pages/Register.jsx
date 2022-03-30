@@ -53,7 +53,7 @@ export const Register = () => {
 
         try {
                 const response = await axios.post(
-                "http://localhost:80/api/users",
+                "http://localhost:443/api/users",
                 {
                     name,
                     email,
