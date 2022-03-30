@@ -6,7 +6,9 @@ import axios from 'axios'
 import { AppContext } from '../context/appContext';
 toast.configure();
 
+
 export const Register = () => {
+
     const {isLogged} = useContext(AppContext);
     const navigate=useNavigate();
 
@@ -51,7 +53,7 @@ export const Register = () => {
 
         try {
                 const response = await axios.post(
-                "http://localhost:5000/api/users",
+                "http://localhost:80/api/users",
                 {
                     name,
                     email,
