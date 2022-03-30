@@ -32,7 +32,7 @@ Authentication & registration made by myself (not using redux)
 * FRONTEND
 
 - react-router-dom
-  - use Router, Routes, Route, useNavigate(), etc.
+  - use Router, Routes, Route, useNavigate(), useParams(), Link etc.
 - toastify
   - error handling in frontend
 - axios
@@ -41,3 +41,5 @@ Authentication & registration made by myself (not using redux)
 - react-modal
 - react-jwt
   - use decodeToken()
+- react-paginate
+  - manage pagination for MyTickets page

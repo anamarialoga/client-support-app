@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/appContext';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 toast.configure();
 
 export const NewTicket = () => {
-    console.log('New Ticket Page');
-
+    const {isLogged, user} = useContext(AppContext);
     const navigate= useNavigate();
 
-    const {isLogged, user} = useContext(AppContext);
-    console.log('Is the user logged?', isLogged);
-    console.log('Current user: ', user);
-    console.log('token: ', localStorage.getItem('token') );
+    useEffect(()=>{
+      console.log('New Ticket Page');
+      console.log('Is the user logged?', isLogged);
+      console.log('Current user: ', user);
+    },[isLogged, user]);
 
     const [product, setProduct] = useState("");
     const [description, setDescription] = useState("");
@@ -70,7 +70,7 @@ export const NewTicket = () => {
               value={product}
               onChange={(e) => setProduct(e.target.value)}
             >
-              <option value="" disabled selected hidden>Select iProduct...</option>
+              <option value={""} disabled hidden >Select iProduct...</option>
               <option value='iPhone'>iPhone</option>
               <option value='Macbook Pro'>Macbook Pro</option>
               <option value='iMac'>iMac</option>

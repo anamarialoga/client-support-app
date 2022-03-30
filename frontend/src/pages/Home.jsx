@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
 import { FaQuestionCircle, FaTicketAlt } from 'react-icons/fa'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../context/appContext';
 
 export const Home = () => {
-  console.log('Home Page');
-
   const {isLogged, user} = useContext(AppContext);
-  console.log('Is the user logged?', isLogged);
-  console.log('Current user: ', user);
+
+  useEffect(()=>{
+    console.log('Home Page');
+    console.log('Is the user logged?', isLogged);
+    console.log('Current user: ', user);
+  }, [isLogged, user]);
   
   return (
     <>

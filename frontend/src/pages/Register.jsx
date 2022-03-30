@@ -7,19 +7,18 @@ import { AppContext } from '../context/appContext';
 toast.configure();
 
 export const Register = () => {
-    console.log('Register Page');
-
     const {isLogged} = useContext(AppContext);
-    console.log('Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
-
     const navigate=useNavigate();
+
     //Once the user is logged in, he cannot access this page again
     useEffect(()=>{
+        console.log('Register Page');
+        console.log('Is the user logged?', isLogged, 'token: ', localStorage.getItem('token'));
         if(isLogged){
             //directly redirect to Home
             navigate("/me");
         }
-    }, [isLogged, navigate])
+    }, [isLogged, navigate]);
 
     const [formData, setFormData] = useState({
         name: "",

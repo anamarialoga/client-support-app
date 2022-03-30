@@ -1,15 +1,17 @@
-import React, { useContext} from 'react';
+import React, { useContext, useEffect} from 'react';
 import {FaSignInAlt} from 'react-icons/fa'
 import { toast } from "react-toastify";
 import { AppContext } from '../context/appContext';
-
 toast.configure();
 
 export const Login = () => {
-    console.log('Login Page');
-    
     const {onChange, onLogin, formData, isLogged} = useContext(AppContext);
-    console.log("Is the user logged?", isLogged, 'token: ', localStorage.getItem('token'));
+
+    useEffect(()=>{
+        console.log('Login Page');
+        console.log("Is the user logged?", isLogged, 'token: ', localStorage.getItem('token'));
+    },[isLogged]);
+
 
     return (
     <>

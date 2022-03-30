@@ -4,14 +4,10 @@ import { toast } from 'react-toastify';
 import { Spinner } from '../components/Spinner';
 import TicketItem from '../components/TicketItem';
 import { AppContext } from '../context/appContext';
+import ReactPaginate from 'react-paginate';
 
 export const MyTickets= ()=> {
-    console.log('My Tickets Page');
-
     const {isLogged, user} = useContext(AppContext);
-    console.log('Is the user logged?', isLogged);
-    console.log('Current user: ', user);
-
     const [tickets, setTickets] = useState([]);
     const [isLoading, setIsLoading ] = useState(false);
 
@@ -22,18 +18,36 @@ export const MyTickets= ()=> {
             },
         };
         try{
-            const {data} = await axios.get('http://localhost:5000/api/tickets', config);
-            setTickets(data);
+            const response = await axios.get('http://localhost:5000/api/tickets', config)  ;
+            if(response.data.length> 0)
+            {
+              setTickets(response.data);
+            }else{
+              toast.info('There are no tickets in the queue')
+            }
             setIsLoading(false);
         }catch(error){
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message);
         }
     }
 
     useEffect(()=>{
+        console.log('My Tickets Page');
+        console.log('Is the user logged?', isLogged);
+        console.log('Current user: ', user);
         setIsLoading(true);
         fetchMyTickets();
-    },[]);
+    },[user,isLogged]);
+
+
+    //PAGINATION
+    const [pageNumber, setPageNumber] = useState(0);
+    const ticketsPerPage = 3;
+    const ticketsSeen = pageNumber * ticketsPerPage;
+    const pageCount = Math.ceil(tickets.length / ticketsPerPage);
+    const changePage = ({ selected }) => {
+      setPageNumber(selected);
+    };
 
   return isLoading === false ?(
     <>
@@ -46,9 +60,20 @@ export const MyTickets= ()=> {
           <div>Status</div>
           <div></div>
         </div>
-        {tickets?.map((ticket) => (
-          <TicketItem key={ticket._id} ticket={ticket} />
-        ))}
+        {tickets.length > 0 ? (Array.from(tickets)?.slice(ticketsSeen, ticketsSeen + ticketsPerPage).map((ticket) => (
+        <TicketItem key={ticket._id} ticket={ticket} /> 
+        ))) : (<div>Currently, you did not open any tickets</div>)}
+        <ReactPaginate
+        previousLabel={'<'}
+        nextLabel={tickets.length > 0 ? ">" : ""}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginationBttns"}
+        previousLinkClassName={"previousBttn"}
+        nextLinkClassName={"nextBttn"}
+        disabledClassName={"paginationDisabled"}
+        activeClassName={"paginationActive"}
+      />
       </div>
     </>
   ): <Spinner/>

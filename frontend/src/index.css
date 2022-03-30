@@ -185,6 +185,40 @@ h3 {
   transform: scale(0.98);
 }
 
+.paginationBttns {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 60px;
+  color: black;
+  cursor: pointer;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: #000;
+  border: 1.5px solid black;
+}
+
+.paginationDisabled a {
+  color: white;
+  background-color: white;
+  border-color: white;
+}
+
 .ticket-created {
   border: 1px solid #e6e6e6;
   border-radius: 5px;

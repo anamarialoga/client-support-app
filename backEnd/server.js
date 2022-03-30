@@ -2,7 +2,6 @@ const express = require ('express');
 const colors = require ('colors');
 const dotenv= require('dotenv');
 dotenv.config();
-const { errorHandler } = require('./middleware/errorMiddleware');
 const { connectDB } = require('./config/db');
 const cors = require('cors');
 
@@ -14,7 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());//send raw json
 app.use(express.urlencoded({extended: false}));//send urlencoded
-app.use(errorHandler);//use this Error format
 
 app.get('/', (req, rsp)=>{
     rsp.status(200).json({message: "Welcome to the Client Support API"});
