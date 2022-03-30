@@ -50,7 +50,7 @@ export const Register = () => {
         };
 
         try {
-                const { data } = await axios.post(
+                const response = await axios.post(
                 "http://localhost:5000/api/users",
                 {
                     name,
@@ -60,7 +60,7 @@ export const Register = () => {
                 config
                 );
                 
-                console.log(data);
+                console.log(response.data);
                 toast.success("Registrated with success");
         
                 navigate("/login");
