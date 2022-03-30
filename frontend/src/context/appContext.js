@@ -53,7 +53,7 @@ export const AppProvider = ({children})=>{
         };
         
          try{
-                const  {data}  = await axios.post(
+                const response = await axios.post(
                 "http://localhost:5000/api/users/login",
                 {
                     email,
@@ -61,13 +61,13 @@ export const AppProvider = ({children})=>{
                 },
                 config
                 );
-                    localStorage.setItem('token', data.token);
-                    console.log('data', data);
+                    localStorage.setItem('token', response.data.token);
+                    console.log('data', response.data);
                     window.location.href = '/me';
                     toast.success("Login with success");
          } 
           catch (error) {
-                toast.error(error.response.data.message);
+                toast.error(error.response.data?.message);
           }
 
     }
